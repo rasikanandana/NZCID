@@ -18,7 +18,7 @@ development, data engineering, and hazard-resilience analysis.
 
 | Module | What it does |
 |---|---|
-| **🗺️ Interactive map** | Folium map with toggleable thematic layers (livability, house price, rent, population, growth, hazards) plus schools, hospitals and **live GeoNet earthquakes**. |
+| **🗺️ Interactive map** | Folium map with **button-style controls**: a segmented control picks the indicator that colours the map; pills toggle schools / hospitals / **live GeoNet earthquakes**. **Click any suburb to focus it** — the snapshot panel and every other page follow your selection. |
 | **🏘️ Community profile** | Housing trends, population & economy, accessibility (schools + EQI, hospitals, transport), climate, and hazard exposure for any community. |
 | **⚖️ Compare** | Head-to-head of two communities — radar chart, indicator-by-indicator table with winner highlighting, and a verdict (e.g. *Petone vs Johnsonville*). |
 | **📈 Livability index** | Custom 0–100 score across six weighted pillars, shown as a gauge with regional ranking. |
@@ -77,13 +77,14 @@ and the GeoNet helpers (offline — no network needed).
 ## 🗂️ Project structure
 
 ```
-app.py                       # Home: map + region overview
-pages/
-  1_Community_Profile.py
-  2_Compare.py
-  3_Hazards.py
-  4_Demographics.py
-  5_About.py
+app.py                       # entry: st.navigation + theme setup
+views/
+  explore.py                 # interactive map + indicator buttons (home)
+  profile.py                 # single-community deep dive
+  compare.py                 # two-community head-to-head
+  hazards.py                 # live GeoNet quakes + exposure indices
+  demographics.py            # population structure & comparisons
+  about.py                   # methodology, sources, roadmap
 nzcid/                       # importable package at the repo root
   config.py                  # palette, paths, livability pillars & weights
   data_loader.py             # cached CSV loaders

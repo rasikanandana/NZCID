@@ -114,5 +114,5 @@ def build_map(
         grp.add_to(fmap)
 
     colormap.add_to(fmap)
-    folium.LayerControl(collapsed=False).add_to(fmap)
+    # Overlays are toggled from the app's button bar, so no LayerControl here.
     return fmap

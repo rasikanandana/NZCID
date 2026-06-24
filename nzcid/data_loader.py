@@ -50,3 +50,15 @@ def get_suburb(name: str) -> pd.Series:
     if match.empty:
         raise KeyError(f"Unknown suburb: {name!r}")
     return match.iloc[0]
+
+
+def nearest_suburb(lat: float, lon: float) -> str:
+    """Return the suburb whose centroid is closest to (lat, lon).
+
+    Used for click-to-select on the map. Uses a cheap squared-degree distance
+    (fine at this scale) rather than full haversine.
+    """
+    df = load_suburbs()
+    d2 = (df["lat"] - lat) ** 2 + (df["lon"] - lon) ** 2
+    return df.loc[d2.idxmin(), "suburb"]
+
