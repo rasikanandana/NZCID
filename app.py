@@ -31,6 +31,8 @@ st.session_state["_pages"] = {p.title: p for p in PAGES}
 with st.sidebar:
     st.markdown("## 🗺️ NZ Community Insights")
     st.caption("Wellington Region · MVP")
+    st.caption("© Rasika Nandana rasikanandana@gmail.com")
+    
     st.divider()
 
 st.navigation(PAGES).run()
