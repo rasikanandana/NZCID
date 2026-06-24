@@ -41,8 +41,8 @@ are the mean of their metrics; the overall score is the weighted sum:
 | Environment | 10% | Sunshine hours, rainfall |
 | Community | 10% | Population growth, amenities |
 
-Defined in [`src/nzcid/config.py`](src/nzcid/config.py); computed in
-[`src/nzcid/livability.py`](src/nzcid/livability.py). Tweak weights in one place
+Defined in [`nzcid/config.py`](nzcid/config.py); computed in
+[`nzcid/livability.py`](nzcid/livability.py). Tweak weights in one place
 and the whole app updates.
 
 ## 🚀 Run locally
@@ -84,7 +84,7 @@ pages/
   3_Hazards.py
   4_Demographics.py
   5_About.py
-src/nzcid/
+nzcid/                       # importable package at the repo root
   config.py                  # palette, paths, livability pillars & weights
   data_loader.py             # cached CSV loaders
   livability.py              # scoring engine

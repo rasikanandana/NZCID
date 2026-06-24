@@ -3,8 +3,6 @@
 Run locally with:  streamlit run app.py
 """
 
-import _bootstrap  # noqa: F401  (adds ./src to sys.path)
-
 import streamlit as st
 from streamlit_folium import st_folium
 
