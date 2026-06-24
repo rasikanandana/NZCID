@@ -2,17 +2,37 @@ name,suburb,lat,lon,type,eqi,roll
 Wellington College,Mount Victoria,-41.3045,174.7855,Secondary,398,1650
 Wellington Girls' College,Thorndon,-41.2710,174.7820,Secondary,392,1300
 Wellington High School,Te Aro,-41.3010,174.7700,Secondary,425,1200
+St Mark's Church School,Mount Victoria,-41.3000,174.7860,Primary,360,420
+Te Aro School,Te Aro,-41.2960,174.7720,Primary,440,260
+Clyde Quay School,Mount Victoria,-41.2950,174.7830,Primary,415,300
 Newtown School,Newtown,-41.3120,174.7820,Primary,455,420
+South Wellington Intermediate,Newtown,-41.3160,174.7790,Intermediate,460,520
 Island Bay School,Island Bay,-41.3420,174.7690,Primary,438,360
+Berhampore School,Newtown,-41.3210,174.7760,Primary,470,300
 Karori Normal School,Karori,-41.2850,174.7400,Primary,398,720
 Samuel Marsden Collegiate,Karori,-41.2820,174.7330,Composite,372,560
+Karori West Normal School,Karori,-41.2830,174.7250,Primary,405,400
 Onslow College,Johnsonville,-41.2280,174.8000,Secondary,418,1100
+Johnsonville School,Johnsonville,-41.2230,174.8040,Primary,420,480
 Miramar Central School,Miramar,-41.3130,174.8150,Primary,420,380
+Miramar North School,Miramar,-41.3050,174.8170,Primary,430,290
 Kelburn Normal School,Kelburn,-41.2880,174.7650,Primary,375,480
+Wellington East Girls' College,Mount Victoria,-41.3030,174.7900,Secondary,420,900
 Hutt Valley High School,Hutt Central,-41.2120,174.9080,Secondary,448,1500
+Hutt Central School,Hutt Central,-41.2080,174.9050,Primary,440,360
+St Bernard's College,Hutt Central,-41.2200,174.8900,Secondary,460,650
 Petone Central School,Petone,-41.2260,174.8700,Primary,452,300
+Wilford School,Petone,-41.2300,174.8780,Primary,470,240
 Wainuiomata High School,Wainuiomata,-41.2640,174.9510,Secondary,485,650
+Wainuiomata Intermediate,Wainuiomata,-41.2700,174.9480,Intermediate,490,360
+Konini School,Wainuiomata,-41.2580,174.9520,Primary,495,300
 Upper Hutt College,Upper Hutt,-41.1280,175.0650,Secondary,462,900
+Heretaunga College,Upper Hutt,-41.1320,175.0500,Secondary,455,700
 Tawa College,Tawa,-41.1680,174.8240,Secondary,408,1250
+Tawa Intermediate,Tawa,-41.1700,174.8270,Intermediate,415,560
+Redwood School,Tawa,-41.1600,174.8200,Primary,410,420
 Aotea College,Porirua,-41.1320,174.8480,Secondary,475,800
+Porirua School,Porirua,-41.1340,174.8410,Primary,485,320
+Bishop Viard College,Porirua,-41.1380,174.8430,Secondary,490,400
 Kapiti College,Paraparaumu,-40.9100,175.0050,Secondary,455,1400
+Paraparaumu School,Paraparaumu,-40.9150,175.0080,Primary,460,420

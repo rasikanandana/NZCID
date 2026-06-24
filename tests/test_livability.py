@@ -4,7 +4,7 @@ import pandas as pd
 import pytest
 
 from nzcid import config, data_loader
-from nzcid.livability import _normalise, add_livability, pillar_breakdown
+from nzcid.livability import _normalise, add_livability, explain, pillar_breakdown
 
 
 def test_pillar_weights_sum_to_one():
@@ -73,3 +73,30 @@ def test_add_livability_is_pure():
     before = df.copy()
     add_livability(df)
     pd.testing.assert_frame_equal(df, before)  # input unchanged
+
+
+def test_explain_returns_strengths_and_weaknesses():
+    row = data_loader.get_suburb("Karori")
+    strengths, weaknesses = explain(row, n=2)
+    assert len(strengths) == 2 and len(weaknesses) == 2
+    # Strengths score at least as high as weaknesses.
+    assert min(s for _, s in strengths) >= max(w for _, w in weaknesses)
+    # Karori is expensive, so Affordability should be among its weaknesses.
+    assert "Affordability" in {label for label, _ in weaknesses}
+
+
+def test_inland_suburbs_have_zero_tsunami_exposure():
+    df = data_loader.load_suburbs()
+    inland = ["Karori", "Kelburn", "Tawa", "Johnsonville", "Upper Hutt"]
+    for name in inland:
+        assert df.loc[df["suburb"] == name, "tsunami_exposure"].iloc[0] == 0
+
+
+def test_nearest_suburb_matches_centroid():
+    petone = data_loader.get_suburb("Petone")
+    assert data_loader.nearest_suburb(petone["lat"], petone["lon"]) == "Petone"
+
+
+def test_schools_cover_multiple_types():
+    types = set(data_loader.load_schools()["type"])
+    assert {"Primary", "Secondary"}.issubset(types)

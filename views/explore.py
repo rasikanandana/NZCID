@@ -11,7 +11,7 @@ import streamlit as st
 from streamlit_folium import st_folium
 
 from nzcid import data_loader
-from nzcid.services import geonet
+from nzcid.services import geocode, geonet
 from nzcid.ui import charts, common, maps
 
 # Friendly labels for the overlay buttons -> internal flags.
@@ -25,6 +25,35 @@ def _quakes():
     return geonet.filter_wellington(geonet.fetch_recent_quakes(mmi=3))
 
 
+@st.cache_data(ttl=3600, show_spinner="Looking up address…")
+def _geocode(addr: str):
+    """Cached geocode lookup (polite to Nominatim's rate limit)."""
+    return geocode.geocode_nz(addr)
+
+
+def _address_search() -> None:
+    """Address box: geocode -> focus the nearest community, drop a map pin."""
+    with st.form("addr_search", clear_on_submit=False):
+        cols = st.columns([5, 1])
+        addr = cols[0].text_input(
+            "🔎 Find by address, suburb or place",
+            placeholder="e.g. 1 Lambton Quay, Wellington  ·  Jackson St Petone",
+            label_visibility="collapsed",
+        )
+        submitted = cols[1].form_submit_button("Search", use_container_width=True)
+    if submitted and addr.strip():
+        res = _geocode(addr)
+        if res is None:
+            st.session_state.pop("addr_pin", None)
+            st.warning("Couldn't find that address (or geocoding is offline "
+                       "right now). Try a suburb or place name.")
+        else:
+            near = data_loader.nearest_suburb(res.lat, res.lon)
+            st.session_state["addr_pin"] = (res.lat, res.lon, res.label)
+            common.set_focus(near)  # applied before the picker renders below
+            st.success(f"📍 {res.label}  →  nearest community: **{near}**")
+
+
 def render() -> None:
     suburbs = data_loader.load_suburbs()
     schools = data_loader.load_schools()
@@ -32,9 +61,11 @@ def render() -> None:
 
     common.hero(
         "Explore Wellington communities",
-        "Choose what the map shows, click a suburb to focus it, and read its "
-        "livability snapshot on the right.",
+        "Search an address, choose what the map shows, click a suburb to focus "
+        "it, and read its livability snapshot on the right.",
     )
+
+    _address_search()
 
     # ---------- Control bar (buttons, not dropdowns) ----------------------- #
     c1, c2 = st.columns([3, 2])
@@ -65,8 +96,9 @@ def render() -> None:
     focus = common.focus_picker(view["suburb"].tolist(), location=f2)
 
     quakes = _quakes() if "quakes" in flags else None
-    st.caption("💡 Tip: click any suburb circle on the map to focus it. "
-               "Larger / greener circles score better on the selected indicator.")
+    st.caption("💡 Tip: **click any suburb circle** to focus it. Circle "
+               "**size = population**; **colour = the indicator** you picked "
+               "(green = better, red = worse).")
 
     # ---------- Map (centre) + snapshot (right) ---------------------------- #
     map_col, info_col = st.columns([2.3, 1])
@@ -77,9 +109,10 @@ def render() -> None:
             schools=schools if "schools" in flags else None,
             hospitals=hospitals if "hospitals" in flags else None,
             quakes=quakes,
+            pin=st.session_state.get("addr_pin"),
         )
         state = st_folium(
-            fmap, key="explore_map", height=320,
+            fmap, key="explore_map", height=560,
             use_container_width=True,  # st_folium's own param (pixels or full width)
             returned_objects=["last_object_clicked"],
         )

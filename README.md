@@ -14,11 +14,23 @@ development, data engineering, and hazard-resilience analysis.
 
 ---
 
+## 🖼️ Gallery
+
+| | |
+|---|---|
+| ![Region map](docs/screenshots/01_map_overview.png) | ![Livability ranking](docs/screenshots/02_livability_ranking.png) |
+| ![Compare](docs/screenshots/03_compare_petone_karori.png) | ![Why this score](docs/screenshots/06_why_this_score_karori.png) |
+| ![Hazards](docs/screenshots/04_hazards_petone.png) | ![Livability gauge](docs/screenshots/05_livability_gauge.png) |
+
+<sub>Regenerate with `python scripts/generate_screenshots.py`.</sub>
+
+---
+
 ## ✨ Features
 
 | Module | What it does |
 |---|---|
-| **🗺️ Interactive map** | Folium map with **button-style controls**: a segmented control picks the indicator that colours the map; pills toggle schools / hospitals / **live GeoNet earthquakes**. **Click any suburb to focus it** — the snapshot panel and every other page follow your selection. |
+| **🗺️ Interactive map** | Folium map with **button-style controls**: a segmented control picks the indicator that colours the map (circle **size = population**); pills toggle schools / hospitals / **live GeoNet earthquakes**. **Search an address** (geocoded to the nearest community) or **click any suburb to focus it** — the snapshot panel and every other page follow your selection. |
 | **🏘️ Community profile** | Housing trends, population & economy, accessibility (schools + EQI, hospitals, transport), climate, and hazard exposure for any community. |
 | **⚖️ Compare** | Head-to-head of two communities — radar chart, indicator-by-indicator table with winner highlighting, and a verdict (e.g. *Petone vs Johnsonville*). |
 | **📈 Livability index** | Custom 0–100 score across six weighted pillars, shown as a gauge with regional ranking. |
@@ -101,6 +113,10 @@ tests/                       # pytest suite
 ```
 
 ## 📊 Data sources & provenance
+
+> Every column is documented in **[`DATA_DICTIONARY.md`](DATA_DICTIONARY.md)**
+> (units, meaning, and how hazard exposure feeds the livability score).
+
 
 | Domain | Intended source | MVP status |
 |---|---|---|

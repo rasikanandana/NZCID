@@ -54,6 +54,21 @@ def add_livability(df: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
+def explain(row: pd.Series, n: int = 2) -> tuple[list[tuple[str, float]],
+                                                  list[tuple[str, float]]]:
+    """Return the suburb's top ``n`` strengths and weaknesses as pillars.
+
+    Each item is ``(pillar_label, score)``. Used to explain *why* a suburb
+    scores the way it does (e.g. an expensive suburb is dragged down by the
+    Affordability pillar even if it's pleasant to live in).
+    """
+    ranked = sorted(PILLARS, key=lambda p: float(row[f"score_{p.key}"]),
+                    reverse=True)
+    strengths = [(p.label, float(row[f"score_{p.key}"])) for p in ranked[:n]]
+    weaknesses = [(p.label, float(row[f"score_{p.key}"])) for p in ranked[-n:]]
+    return strengths, weaknesses
+
+
 def pillar_breakdown(row: pd.Series) -> pd.DataFrame:
     """Per-pillar contribution table for a single suburb (for charts/tooltips)."""
     rows = []

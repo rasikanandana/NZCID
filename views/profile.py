@@ -3,7 +3,7 @@
 import streamlit as st
 
 from nzcid import data_loader
-from nzcid.livability import pillar_breakdown
+from nzcid.livability import explain, pillar_breakdown
 from nzcid.ui import charts, common
 
 names = data_loader.suburb_names()
@@ -26,6 +26,22 @@ with top[1]:
     st.markdown("##### Livability pillar breakdown")
     st.plotly_chart(charts.pillar_bars(pillar_breakdown(row)),
                     width="stretch")
+
+# ----- Why this score? ----------------------------------------------------- #
+strengths, weaknesses = explain(row)
+s_txt = ", ".join(f"{lbl} ({sc:.0f})" for lbl, sc in strengths)
+w_txt = ", ".join(f"{lbl} ({sc:.0f})" for lbl, sc in weaknesses)
+with st.expander("ℹ️ Why this score?", expanded=True):
+    st.markdown(
+        f"**{selected}** scores **{row['livability_score']:.0f}/100** "
+        f"(rank {int(row['rank'])} of {len(suburbs)}). Scores are *relative* "
+        f"across the region.\n\n"
+        f"- 💪 **Strengths:** {s_txt}\n"
+        f"- ⚠️ **Drags it down:** {w_txt}\n\n"
+        "Remember the index weights **Affordability 25%** and **Hazard "
+        "resilience 20%** — so a desirable but **expensive** or **hazard-prone** "
+        "suburb can still rank mid-table."
+    )
 
 # ----- Housing ------------------------------------------------------------- #
 st.markdown("### 🏠 Housing")
