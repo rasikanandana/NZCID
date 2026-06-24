@@ -79,7 +79,7 @@ def render() -> None:
             quakes=quakes,
         )
         state = st_folium(
-            fmap, key="explore_map", height=560,
+            fmap, key="explore_map", height=320,
             use_container_width=True,  # st_folium's own param (pixels or full width)
             returned_objects=["last_object_clicked"],
         )
